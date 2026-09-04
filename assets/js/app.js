@@ -97,6 +97,33 @@ let masterGain = null;
 let stageZoomed = false;
 let openedModal = false;
 
+// V3: use the first tap/click as the user gesture for fullscreen.
+// Browsers intentionally block unsolicited fullscreen requests, so we do this
+// from the Enter button rather than attempting it on orientationchange alone.
+async function enterImmersiveMode() {
+  try {
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen({ navigationUI: "hide" });
+    }
+  } catch (_) {
+    // Fullscreen may be unavailable (notably on some iOS browsers).
+  }
+  try {
+    if (screen.orientation?.lock) await screen.orientation.lock("landscape");
+  } catch (_) {
+    // Orientation lock is optional; the CSS portrait gate remains as fallback.
+  }
+  syncViewport();
+}
+
+function syncViewport() {
+  // Recalculate camera transform after rotation/fullscreen to prevent the old
+  // portrait viewport from leaving letterboxing or misaligned hotspots.
+  requestAnimationFrame(() => {
+    if (!stageZoomed && !openedModal) els.stage.style.transform = "";
+  });
+}
+
 function initAudio() {
   if (audioCtx) return;
   const C = window.AudioContext || window.webkitAudioContext;
@@ -160,12 +187,17 @@ function setZoomed(value) {
   tone(stageZoomed ? 540 : 460, .22, .035);
 }
 
-els.enterBtn.addEventListener("click", () => {
+els.enterBtn.addEventListener("click", async () => {
   unlockAudio();
+  // Request fullscreen while the click is still an active user gesture.
+  await enterImmersiveMode();
   successChime();
   els.welcomeScreen.classList.add("leaving");
   window.setTimeout(() => activateScene(els.corridor, els.classroom, 1), 320);
-  window.setTimeout(() => els.welcomeScreen.classList.remove("leaving"), 1050);
+  window.setTimeout(() => {
+    els.welcomeScreen.classList.remove("leaving");
+    syncViewport();
+  }, 1050);
 });
 
 els.zoomBtn.addEventListener("click", () => setZoomed(!stageZoomed));
@@ -278,3 +310,10 @@ els.stage.addEventListener("touchend", (e) => {
 
 // Keep the greeting valid if the URL contains an unknown teacher key.
 if (!TEACHERS[teacherKey]) history.replaceState({}, "", `${location.pathname}?teacher=shahid`);
+
+
+// V3 viewport synchronization: rotation and browser chrome changes can alter
+// the visual viewport even when the document remains the same size.
+window.addEventListener("orientationchange", () => window.setTimeout(syncViewport, 120));
+window.addEventListener("resize", syncViewport, { passive: true });
+document.addEventListener("fullscreenchange", syncViewport);
