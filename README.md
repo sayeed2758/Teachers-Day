@@ -1,15 +1,19 @@
-# Teacher’s Day Interactive V4
+# Teacher's Day Interactive V6
 
-One static Netlify-ready site with personalized teacher URLs.
+## Teacher-specific URLs
+- `?teacher=shahid`
+- `?teacher=sakti`
+- `?teacher=sameer`
+- `?teacher=naila`
+- `?teacher=mitanjali`
+- `?teacher=sanjeeda`
+- `?teacher=rupali`
+- `?teacher=saraswati`
+- `?teacher=sumitra`
+- `?teacher=fatima`
 
-## V4 highlights
-- Reference-inspired corridor → classroom journey
-- Touch-friendly hotspot discovery pulses and selection choreography
-- Physical-keepsake modal reveal animations
-- Original browser-generated emotional ambient music after the first tap
-- Sound toggle controls both effects and music
-- Fullscreen/orientation handling from V3 retained
-- Teacher routing: `?teacher=shahid`, `?teacher=sakti`, etc.
+## Replace
+Copy the complete `teacher-day-site` folder to the GitHub/Netlify project.
 
-## Deploy
-Upload this folder to Netlify or connect the GitHub repository. No server/database is required for the current static experience.
+## Notes
+This V6 uses locally bundled reference screenshots supplied in the conversation as visual scene assets, with an interactive scene engine layered over them. The background art can later be replaced by original/licensed source artwork without changing the interaction architecture.

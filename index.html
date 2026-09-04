@@ -1,118 +1,102 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#17211d" />
-  <meta name="description" content="A personalized interactive Teacher's Day keepsake." />
-  <title>Happy Teacher's Day ✨</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07131a">
+<meta name="description" content="A cinematic interactive Teacher's Day classroom experience.">
+<title>Teacher's Day ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="orientation-lock" id="orientationLock" aria-hidden="true">
-    <div class="orientation-card">
-      <div class="phone-icon" aria-hidden="true">📱</div>
-      <h2>Please Rotate Your Phone</h2>
-      <p>Turn your device sideways for the full classroom experience.</p>
+<div id="app" class="app">
+  <div id="stars" class="stars" aria-hidden="true"></div>
+
+  <section id="portraitGate" class="portrait-gate" aria-hidden="true">
+    <div class="portrait-phone">▯</div>
+    <h2>PLEASE ROTATE YOUR<br>PHONE</h2>
+    <p>Surprise for you, <span id="portraitName">Teacher</span>! ✨</p>
+  </section>
+
+  <section id="sceneEntrance" class="scene scene-entrance is-active">
+    <div class="frame">
+      <img src="assets/images/entrance.jpg" class="scene-image" alt="Teacher's Day classroom entrance">
+      <div class="dynamic entrance-welcome"><span>Welcome,</span> <b id="entranceTeacher">Teacher!</b> <i>❤</i></div>
+      <div class="dynamic entrance-sub">Today, the classroom is all about YOU. ✨</div>
+      <div class="scene-dim"></div>
+      <div class="enter-wrap">
+        <button id="enterBtn" class="pill-btn primary" type="button"><span>🚪</span> Enter the Classroom <b>✨</b></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="sceneClassroom" class="scene scene-classroom" aria-hidden="true">
+    <div id="camera" class="frame camera">
+      <img id="classroomImage" src="assets/images/classroom.jpg" class="scene-image" alt="Interactive classroom">
+      <div class="dynamic board-name" id="boardName">Teacher!</div>
+      <div class="hotspots" id="hotspots">
+        <button class="hotspot hotspot-report" data-key="report" aria-label="Report Card"><span>✦ Report Card</span></button>
+        <button class="hotspot hotspot-letter" data-key="letter" aria-label="Letter"><span>✦ Letter</span></button>
+        <button class="hotspot hotspot-diary" data-key="diary" aria-label="Diary"><span>✦ Diary</span></button>
+        <button class="hotspot hotspot-memory-1" data-key="memory1" aria-label="Memory"><span>✦ Memory</span></button>
+        <button class="hotspot hotspot-memory-2" data-key="memory2" aria-label="Memory"><span>✦ Memory</span></button>
+        <button class="hotspot hotspot-memory-3" data-key="memory3" aria-label="Memory"><span>✦ Memory</span></button>
+      </div>
+      <div id="guidedPanel" class="guided-panel">
+        <div class="guided-copy"><span class="pin">📍</span><strong id="guidedText">Look around the class!</strong></div>
+        <button id="guidedAction" class="pill-btn action" type="button"><span id="guidedActionText">Zoom</span> <b>➜</b></button>
+      </div>
+      <div id="instructionBadge" class="instruction-badge">Tap a glowing object to explore</div>
+    </div>
+  </section>
+
+  <section id="sceneFocus" class="scene scene-focus" aria-hidden="true">
+    <div class="frame focus-frame">
+      <img id="focusImage" src="assets/images/report-focus.jpg" class="scene-image" alt="Focused classroom view">
+      <div id="focusOverlay" class="focus-overlay"></div>
+      <div class="guided-panel focus-panel">
+        <div class="guided-copy"><span class="pin">📍</span><strong id="focusHint">We are grading you!</strong></div>
+        <button id="openFocusBtn" class="pill-btn action" type="button"><span id="openFocusText">Open Report Card</span> <b>➜</b></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="sceneFinal" class="scene scene-final" aria-hidden="true">
+    <div class="frame">
+      <img src="assets/images/final.jpg" class="scene-image" alt="Teacher's Day final scene">
+      <div class="final-particles" id="finalParticles" aria-hidden="true"></div>
+      <div class="dynamic final-name">Thank You, <span id="finalTeacher">Teacher!</span> ❤</div>
+      <div class="final-sub">For inspiring, guiding, and believing in us. ✨</div>
+      <div class="final-actions">
+        <button id="replayBtn" class="pill-btn primary" type="button">↪ Replay Classroom Experience</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="top-controls">
+    <button id="soundBtn" class="sound-btn" aria-label="Mute music" aria-pressed="false" type="button">🔊</button>
+  </div>
+
+  <div id="modalLayer" class="modal-layer" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-shell" id="modalShell" role="dialog" aria-modal="true">
+      <button id="modalClose" class="close-btn" type="button" aria-label="Close">✕</button>
+      <img id="modalImage" class="modal-image" src="" alt="">
+      <div class="modal-copy" id="modalCopy">
+        <div class="modal-kicker" id="modalKicker"></div>
+        <h2 id="modalTitle"></h2>
+        <p id="modalMessage"></p>
+        <div id="modalBullets" class="modal-bullets"></div>
+        <button id="copyLink" class="copy-btn" type="button">Copy Personal Link</button>
+      </div>
     </div>
   </div>
 
-  <main id="app" class="app" aria-live="polite">
-    <section class="scene scene-corridor is-active" id="corridorScene" aria-hidden="false">
-      <img class="scene-art corridor-art" src="https://loveones-teacherday.netlify.app/corridor_frame.png" alt="A warm school corridor" />
-      <div class="corridor-vignette"></div>
-      <div class="grain"></div>
-      <div class="welcome-screen" id="welcomeScreen">
-        <div class="welcome-glow"></div>
-        <div class="welcome-content">
-          <div class="sparkles" aria-hidden="true"><span>💖</span><span>✨</span><span>💖</span></div>
-          <p class="eyebrow">Surprise for you! ✨</p>
-          <h1>Today, the classroom is all about <span id="teacherNameWelcome">YOU</span>.</h1>
-          <p class="welcome-sub">A little Teacher's Day keepsake, made especially for you.</p>
-          <button class="primary-btn" id="enterBtn" type="button">
-            <span class="btn-icon">🚪</span>
-            <span>Enter the Classroom</span>
-            <span class="btn-spark">✨</span>
-          </button>
-          <div class="micro-copy">Made with gratitude • Tap to begin</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene scene-classroom" id="classroomScene" aria-hidden="true">
-      <div class="classroom-stage" id="classroomStage">
-        <img class="scene-art classroom-art" src="https://loveones-teacherday.netlify.app/classroom_base.png" alt="An interactive classroom" />
-        <div class="classroom-shade"></div>
-        <div class="focus-ring" id="focusRing" aria-hidden="true"></div>
-
-        <button class="hotspot hotspot-report" data-modal="report" aria-label="Open teacher report card">
-          <span class="hotspot-label">Report Card</span>
-        </button>
-        <button class="hotspot hotspot-envelope" data-modal="letter" aria-label="Open the teacher letter">
-          <span class="hotspot-label">Letter</span>
-        </button>
-        <button class="hotspot hotspot-diary" data-modal="diary" aria-label="Open the teacher diary">
-          <span class="hotspot-label">Diary</span>
-        </button>
-        <button class="hotspot hotspot-memory-1" data-modal="memory1" aria-label="Open memory one">
-          <span class="hotspot-label">Memory</span>
-        </button>
-        <button class="hotspot hotspot-memory-2" data-modal="memory2" aria-label="Open memory two">
-          <span class="hotspot-label">Memory</span>
-        </button>
-        <button class="hotspot hotspot-memory-3" data-modal="memory3" aria-label="Open memory three">
-          <span class="hotspot-label">Memory</span>
-        </button>
-
-        <div class="classroom-copy">
-          <span>Today is your day</span>
-          <strong id="blackboardTeacher">Thank You, Teacher!</strong>
-        </div>
-
-        <div class="look-around" id="lookAround">
-          <div class="hint-copy"><span class="pin-dot">📍</span><span>Look around the class!</span></div>
-          <button id="zoomBtn" type="button" aria-pressed="false"><span>Zoom</span><b>➜</b></button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="top-controls">
-    <button id="soundBtn" class="icon-btn" type="button" aria-label="Turn sound off" aria-pressed="true">🔊</button>
-  </div>
-
-  <div class="progress-dots" id="progressDots" aria-hidden="true">
-    <span class="dot is-active"></span><span class="dot"></span>
-  </div>
-
-  <div class="modal-layer" id="modalLayer" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <section class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-label="Teacher's Day detail">
-      <div class="modal-shimmer"></div>
-      <button class="modal-close" id="modalClose" type="button" aria-label="Close">✕</button>
-      <div class="detail-art-wrap" id="detailArtWrap">
-        <img id="detailArt" class="detail-art" src="" alt="" />
-        <div class="art-loading" id="artLoading">✨</div>
-      </div>
-      <div class="detail-copy">
-        <p class="modal-kicker" id="detailKicker"></p>
-        <h2 id="detailTitle"></h2>
-        <p id="detailMessage"></p>
-        <div id="detailBullets" class="detail-bullets"></div>
-        <div class="modal-footer" id="modalFooter">
-          <span>Made especially for <strong id="footerTeacher"></strong> ❤️</span>
-          <button id="copyLinkBtn" type="button">Copy Link</button>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <script src="assets/js/app.js"></script>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
