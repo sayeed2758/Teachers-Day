@@ -1,128 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b12" />
-  <meta name="description" content="A heartfelt interactive Teacher's Day classroom experience, personalized for each teacher." />
-  <title>A Whole Classroom, Just for You ❤️</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1c2a25" />
+  <title>Happy Teacher's Day ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-<main id="app">
-    <!-- Main Classroom -->
-    <section class="screen classroom-screen is-active" data-screen="classroom" aria-label="Classroom">
-      <div class="cinematic-copy top-copy">
-        <div class="eyebrow">A whole classroom instead. ❤️</div>
-        <h1>Made specially<br>for your teacher.</h1>
-      </div>
+  <div class="orientation-lock" id="orientationLock">
+    <div class="orientation-card">
+      <div class="phone-icon">📱</div>
+      <h2>Please Rotate Your Phone</h2>
+      <p>Turn your device sideways for the full classroom experience.</p>
+    </div>
+  </div>
 
-      <div class="classroom-scene">
-        <div class="wall"></div>
-        <div class="floor"></div>
-        <div class="banner"><span>HAPPY TEACHER'S DAY</span><small>because you make every day worth learning</small></div>
-        <div class="garland"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="window"><span></span><span></span><span></span><span></span></div>
-        <div class="shelf">
-          <div class="plant plant-a"></div><div class="book-stack"></div><div class="frame-note">To the best teacher<br>in our world ♥</div>
-        </div>
-        <div class="board">
-          <div class="board-title">Happy Teacher's Day</div>
-          <div class="board-sub">Dear <span class="teacher-name">Teacher</span>,<br>thank you for believing in us.</div>
-          <div class="board-star">✦ ✦ ✦</div>
-        </div>
-        <div class="desk">
-          <div class="desk-top"></div><div class="desk-front"></div>
-          <div class="apple"></div><div class="paper"></div>
-        </div>
-        <div class="student-desk desk-one"></div><div class="student-desk desk-two"></div><div class="student-desk desk-three"></div>
-        <div class="rug"></div>
-      </div>
+  <main id="app" class="app" aria-live="polite">
+    <section class="scene scene-corridor is-active" id="corridorScene">
+      <img class="scene-art" src="https://loveones-teacherday.netlify.app/corridor_frame.png" alt="Teacher's Day corridor" />
+      <div class="corridor-overlay"></div>
 
-      <div class="bottom-copy">And yes… it comes with their own song. 🎵</div>
-      <div class="action-dock">
-        <button class="dock-btn" data-open="report">Teacher's Report Card</button>
-        <button class="dock-btn" data-open="words">Words to Remember</button>
-        <button class="dock-btn" data-open="memories">Memories</button>
-        <button class="dock-btn accent" data-open="letter">A Letter From the Heart</button>
+      <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+          <div class="sparkles">💖 ✨ 💖</div>
+          <p class="eyebrow">A little surprise for you</p>
+          <h1>Today, the classroom is all about <span id="teacherNameWelcome">YOU</span>.</h1>
+          <button class="primary-btn" id="enterBtn" type="button">🚪 Enter the Classroom ✨</button>
+        </div>
       </div>
     </section>
 
-    <!-- Modal: Report -->
-    <dialog class="memory-modal" id="reportModal">
-      <button class="close-modal" data-close aria-label="Close">×</button>
-      <div class="paper-card report-card">
-        <div class="paper-ribbon">TEACHER'S REPORT CARD</div>
-        <h2><span class="teacher-name">Teacher</span></h2>
-        <p class="muted">A report card no test could measure.</p>
-        <div class="grade-row"><span>Patience</span><span>★★★★★</span></div>
-        <div class="grade-row"><span>Kindness</span><span>★★★★★</span></div>
-        <div class="grade-row"><span>Inspiration</span><span>★★★★★</span></div>
-        <div class="grade-row"><span>Making us believe</span><span>★★★★★</span></div>
-        <div class="score">OVERALL <b>A+</b></div>
-        <p class="signature">Signed by students who will never forget you. ❤️</p>
-      </div>
-    </dialog>
+    <section class="scene scene-classroom" id="classroomScene" aria-hidden="true">
+      <div class="classroom-stage" id="classroomStage">
+        <img class="scene-art" src="https://loveones-teacherday.netlify.app/classroom_base.png" alt="Interactive classroom" />
 
-    <!-- Modal: Words -->
-    <dialog class="memory-modal" id="wordsModal">
-      <button class="close-modal" data-close aria-label="Close">×</button>
-      <div class="paper-card words-card">
-        <div class="paper-ribbon">WORDS THAT DESERVE TO BE REMEMBERED</div>
-        <div class="quote-list">
-          <blockquote>“You made difficult things feel possible.”</blockquote>
-          <blockquote>“You saw potential in us before we saw it ourselves.”</blockquote>
-          <blockquote>“Your classroom felt like a safe place to grow.”</blockquote>
-          <blockquote>“We may forget a lesson, but never how you made us feel.”</blockquote>
+        <button class="hotspot hotspot-report" data-modal="report" aria-label="Open teacher report card"></button>
+        <button class="hotspot hotspot-envelope" data-modal="letter" aria-label="Open teacher letter"></button>
+        <button class="hotspot hotspot-diary" data-modal="diary" aria-label="Open teacher diary"></button>
+        <button class="hotspot hotspot-memory-1" data-modal="memory1" aria-label="Open memory one"></button>
+        <button class="hotspot hotspot-memory-2" data-modal="memory2" aria-label="Open memory two"></button>
+        <button class="hotspot hotspot-memory-3" data-modal="memory3" aria-label="Open memory three"></button>
+
+        <div class="classroom-copy">
+          <span>Today is your day</span>
+          <strong id="blackboardTeacher">Thank You, Teacher!</strong>
+        </div>
+
+        <div class="look-around" id="lookAround">
+          <span>📍 Look around the class!</span>
+          <button id="zoomBtn" type="button">Zoom ➔</button>
         </div>
       </div>
-    </dialog>
-
-    <!-- Modal: Memories -->
-    <dialog class="memory-modal" id="memoriesModal">
-      <button class="close-modal" data-close aria-label="Close">×</button>
-      <div class="paper-card gallery-card">
-        <div class="paper-ribbon">MEMORIES THEY CAN KEEP FOREVER</div>
-        <div class="gallery-grid">
-          <div class="photo photo-1"><span>First day</span></div>
-          <div class="photo photo-2"><span>Little wins</span></div>
-          <div class="photo photo-3"><span>Big laughs</span></div>
-          <div class="photo photo-4"><span>Forever grateful</span></div>
-        </div>
-        <p class="muted">These are common school memories shared across all teacher links. Replace the placeholders with your school photographs in <code>assets/</code>.</p>
-      </div>
-    </dialog>
-
-    <!-- Modal: Letter -->
-    <dialog class="memory-modal" id="letterModal">
-      <button class="close-modal" data-close aria-label="Close">×</button>
-      <div class="letter-wrap">
-        <div class="envelope">
-          <div class="letter-paper">
-            <div class="letter-top">Dear <span class="teacher-name">Teacher</span>,</div>
-            <p>Some teachers teach a subject. You taught us to keep going.</p>
-            <p>Thank you for every extra explanation, every second chance, every smile, and every “you can do this” when we needed it most.</p>
-            <p>Long after we leave your classroom, a part of what you taught us will keep walking with us.</p>
-            <p class="heart-line">Happy Teacher's Day. ❤️</p>
-            <div class="letter-sign">With love,<br><b>Your Students</b></div>
-          </div>
-        </div>
-      </div>
-    </dialog>
-
-    <!-- Music -->
-    <audio id="bgMusic" loop preload="metadata">
-      <!-- Put your own royalty-free track at assets/music.mp3 and uncomment the source below. -->
-      <!-- <source src="assets/music.mp3" type="audio/mpeg"> -->
-    </audio>
-    <button id="soundToggle" class="sound-toggle" aria-label="Toggle music">♪</button>
+    </section>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/teachers.js"></script>
-  <script src="assets/app.js"></script>
+  <div class="top-controls">
+    <button id="soundBtn" class="icon-btn" type="button" aria-label="Toggle sound">🔊</button>
+  </div>
+
+  <div class="modal-layer" id="modalLayer" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <section class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-label="Teacher's Day detail">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close">✕</button>
+      <div class="detail-art-wrap" id="detailArtWrap">
+        <img id="detailArt" class="detail-art" src="" alt="" />
+      </div>
+      <div class="detail-copy">
+        <p class="modal-kicker" id="detailKicker"></p>
+        <h2 id="detailTitle"></h2>
+        <p id="detailMessage"></p>
+        <div id="detailBullets" class="detail-bullets"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

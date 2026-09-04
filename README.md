@@ -1,36 +1,23 @@
-# Teacher's Day Gift — Multi-Teacher Edition
+# Teacher's Day Interactive — multi-teacher base
 
-One GitHub Pages website can serve all 10 teachers using personalized query links.
+A single static site that resolves a teacher from `?teacher=` and keeps the same interactive classroom experience.
 
-## Teacher links
+Examples:
+- `/?teacher=shahid`
+- `/?teacher=sakti`
+- `/?teacher=sameer`
 
-Replace `YOUR-USERNAME.github.io/teachers-day-gift` with your actual GitHub Pages address:
+## Current interaction pass
+- Orientation gate on portrait phones
+- Intro surprise screen
+- Corridor → classroom cinematic transition
+- Classroom zoom/reset
+- Interactive hotspots for report card, envelope, diary, and memory cards
+- Modal open/close animation with image reveal
+- Sound toggle and small synthesized chime (no audio file required)
+- Keyboard Escape close
+- Gentle desktop pointer parallax
+- Shared single-codebase teacher data architecture
 
-- `?teacher=shahid` — Shahid Sir
-- `?teacher=sakti` — Sakti Sir
-- `?teacher=sameer` — Sameer Sir
-- `?teacher=naila` — Naila Ma'am
-- `?teacher=mitanjali` — Mitanjali Ma'am
-- `?teacher=sanjeeda` — Sanjeeda Ma'am
-- `?teacher=rupali` — Rupali Ma'am
-- `?teacher=saraswati` — Saraswati Ma'am
-- `?teacher=sumitra` — Sumitra Ma'am
-- `?teacher=fatima` — Fatima Ma'am
-
-Example:
-`https://YOUR-USERNAME.github.io/teachers-day-gift/?teacher=shahid`
-
-## How it works
-
-- `assets/teachers.js` contains the 10 teacher profiles.
-- `assets/app.js` reads the `teacher` URL parameter and replaces every teacher-name field.
-- The classroom, animations, letter, report card, and school memories remain common.
-- If a link has an unknown teacher key, the site safely falls back to Shahid Sir and shows a small warning.
-
-## School memories
-
-The memories section is intentionally common for all 10 teachers. Replace the four photo placeholders in `index.html`/CSS with your school memory images later.
-
-## Music
-
-Put the chosen MP3 at `assets/music.mp3`, then uncomment the `<source>` line in `index.html`.
+## Important
+The current build references the public artwork URLs from the supplied reference site so the interaction prototype can be tested immediately. Before production, swap those URLs for licensed/local artwork and add the final teacher-specific content/photos.
