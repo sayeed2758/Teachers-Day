@@ -1,6 +1,16 @@
-# Teacher's Day Interactive V6
+# Teacher's Day Interactive V7
 
-## Teacher-specific URLs
+A code-built interactive Teacher's Day classroom experience inspired by the supplied 31-page visual reference.
+
+## Important
+- No full-page screenshot/background images are used.
+- The main classroom/entrance visuals are drawn in inline SVG + CSS and animated with JavaScript.
+- Memory cards inside the modal are intentionally CSS illustrations. Replace them with real photos only when desired.
+- Music uses the browser Web Audio API; no external copyrighted audio file is required.
+
+## Teacher links
+Use one site with a `teacher` query parameter:
+
 - `?teacher=shahid`
 - `?teacher=sakti`
 - `?teacher=sameer`
@@ -12,8 +22,5 @@
 - `?teacher=sumitra`
 - `?teacher=fatima`
 
-## Replace
-Copy the complete `teacher-day-site` folder to the GitHub/Netlify project.
-
-## Notes
-This V6 uses locally bundled reference screenshots supplied in the conversation as visual scene assets, with an interactive scene engine layered over them. The background art can later be replaced by original/licensed source artwork without changing the interaction architecture.
+## Deploy
+Upload the `teacher-day-site` folder to GitHub/Netlify as a static site. No backend is required for the current version.

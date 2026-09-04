@@ -1,101 +1,193 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#07131a">
-<meta name="description" content="A cinematic interactive Teacher's Day classroom experience.">
-<title>Teacher's Day ✨</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#08131d" />
+<title>Teacher's Day — A Classroom Made With Love</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Caveat:wght@500;600;700&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-<div id="app" class="app">
-  <div id="stars" class="stars" aria-hidden="true"></div>
-
-  <section id="portraitGate" class="portrait-gate" aria-hidden="true">
-    <div class="portrait-phone">▯</div>
-    <h2>PLEASE ROTATE YOUR<br>PHONE</h2>
-    <p>Surprise for you, <span id="portraitName">Teacher</span>! ✨</p>
-  </section>
-
-  <section id="sceneEntrance" class="scene scene-entrance is-active">
-    <div class="frame">
-      <img src="assets/images/entrance.jpg" class="scene-image" alt="Teacher's Day classroom entrance">
-      <div class="dynamic entrance-welcome"><span>Welcome,</span> <b id="entranceTeacher">Teacher!</b> <i>❤</i></div>
-      <div class="dynamic entrance-sub">Today, the classroom is all about YOU. ✨</div>
-      <div class="scene-dim"></div>
-      <div class="enter-wrap">
-        <button id="enterBtn" class="pill-btn primary" type="button"><span>🚪</span> Enter the Classroom <b>✨</b></button>
-      </div>
-    </div>
-  </section>
-
-  <section id="sceneClassroom" class="scene scene-classroom" aria-hidden="true">
-    <div id="camera" class="frame camera">
-      <img id="classroomImage" src="assets/images/classroom.jpg" class="scene-image" alt="Interactive classroom">
-      <div class="dynamic board-name" id="boardName">Teacher!</div>
-      <div class="hotspots" id="hotspots">
-        <button class="hotspot hotspot-report" data-key="report" aria-label="Report Card"><span>✦ Report Card</span></button>
-        <button class="hotspot hotspot-letter" data-key="letter" aria-label="Letter"><span>✦ Letter</span></button>
-        <button class="hotspot hotspot-diary" data-key="diary" aria-label="Diary"><span>✦ Diary</span></button>
-        <button class="hotspot hotspot-memory-1" data-key="memory1" aria-label="Memory"><span>✦ Memory</span></button>
-        <button class="hotspot hotspot-memory-2" data-key="memory2" aria-label="Memory"><span>✦ Memory</span></button>
-        <button class="hotspot hotspot-memory-3" data-key="memory3" aria-label="Memory"><span>✦ Memory</span></button>
-      </div>
-      <div id="guidedPanel" class="guided-panel">
-        <div class="guided-copy"><span class="pin">📍</span><strong id="guidedText">Look around the class!</strong></div>
-        <button id="guidedAction" class="pill-btn action" type="button"><span id="guidedActionText">Zoom</span> <b>➜</b></button>
-      </div>
-      <div id="instructionBadge" class="instruction-badge">Tap a glowing object to explore</div>
-    </div>
-  </section>
-
-  <section id="sceneFocus" class="scene scene-focus" aria-hidden="true">
-    <div class="frame focus-frame">
-      <img id="focusImage" src="assets/images/report-focus.jpg" class="scene-image" alt="Focused classroom view">
-      <div id="focusOverlay" class="focus-overlay"></div>
-      <div class="guided-panel focus-panel">
-        <div class="guided-copy"><span class="pin">📍</span><strong id="focusHint">We are grading you!</strong></div>
-        <button id="openFocusBtn" class="pill-btn action" type="button"><span id="openFocusText">Open Report Card</span> <b>➜</b></button>
-      </div>
-    </div>
-  </section>
-
-  <section id="sceneFinal" class="scene scene-final" aria-hidden="true">
-    <div class="frame">
-      <img src="assets/images/final.jpg" class="scene-image" alt="Teacher's Day final scene">
-      <div class="final-particles" id="finalParticles" aria-hidden="true"></div>
-      <div class="dynamic final-name">Thank You, <span id="finalTeacher">Teacher!</span> ❤</div>
-      <div class="final-sub">For inspiring, guiding, and believing in us. ✨</div>
-      <div class="final-actions">
-        <button id="replayBtn" class="pill-btn primary" type="button">↪ Replay Classroom Experience</button>
-      </div>
-    </div>
-  </section>
-
-  <div class="top-controls">
-    <button id="soundBtn" class="sound-btn" aria-label="Mute music" aria-pressed="false" type="button">🔊</button>
+<div id="app" class="app" data-stage="orientation">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="orientation" id="orientation" role="status" aria-live="polite">
+    <div class="phone-icon" aria-hidden="true"><span></span><i></i><b></b></div>
+    <div class="rotate-title">PLEASE ROTATE YOUR PHONE</div>
+    <div class="rotate-sub">Surprise for you, <span id="portraitName">Teacher</span>! ✨</div>
   </div>
 
-  <div id="modalLayer" class="modal-layer" aria-hidden="true">
-    <div class="modal-backdrop"></div>
-    <div class="modal-shell" id="modalShell" role="dialog" aria-modal="true">
-      <button id="modalClose" class="close-btn" type="button" aria-label="Close">✕</button>
-      <img id="modalImage" class="modal-image" src="" alt="">
-      <div class="modal-copy" id="modalCopy">
-        <div class="modal-kicker" id="modalKicker"></div>
-        <h2 id="modalTitle"></h2>
-        <p id="modalMessage"></p>
-        <div id="modalBullets" class="modal-bullets"></div>
-        <button id="copyLink" class="copy-btn" type="button">Copy Personal Link</button>
+  <main class="stage" id="stage" aria-label="Teacher's Day interactive classroom">
+    <div class="scene-shell" id="sceneShell">
+      <div class="scene-camera" id="sceneCamera">
+        <svg class="classroom-svg" viewBox="0 0 1440 900" role="img" aria-label="Illustrated classroom">
+          <defs>
+            <linearGradient id="wall" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#fbefe4"/><stop offset="1" stop-color="#eadbcf"/>
+            </linearGradient>
+            <linearGradient id="wood" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#d99b5c"/><stop offset="1" stop-color="#a96935"/>
+            </linearGradient>
+            <linearGradient id="desk" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#dfad6d"/><stop offset="1" stop-color="#a96635"/>
+            </linearGradient>
+            <linearGradient id="door" x1="0" x2="1"><stop stop-color="#8d8f73"/><stop offset="1" stop-color="#68705b"/></linearGradient>
+            <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="16" stdDeviation="18" flood-opacity=".25"/>
+            </filter>
+            <filter id="softGlow"><feGaussianBlur stdDeviation="10" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <pattern id="panel" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#17324a"/><path d="M12 0v24" stroke="#11283a" stroke-width="2" opacity=".8"/></pattern>
+          </defs>
+
+          <rect width="1440" height="900" fill="url(#wall)"/>
+          <rect y="600" width="1440" height="300" fill="url(#panel)"/>
+          <rect y="570" width="1440" height="30" fill="#f0e4d9"/>
+          <rect y="850" width="1440" height="50" fill="#aa6f44"/>
+
+          <!-- side doors -->
+          <g id="door-left" class="decor-object">
+            <rect x="0" y="0" width="180" height="900" fill="#59614d"/>
+            <rect x="24" y="68" width="132" height="630" rx="8" fill="#89927b" stroke="#4e5849" stroke-width="8"/>
+            <rect x="42" y="90" width="96" height="290" rx="5" fill="#d5e1da" opacity=".8"/>
+            <rect x="42" y="405" width="96" height="250" rx="5" fill="#6b7565"/>
+            <rect x="130" y="416" width="9" height="44" rx="4" fill="#28323c"/>
+            <circle cx="122" cy="439" r="8" fill="#d5c6aa"/>
+          </g>
+          <g id="door-right" class="decor-object">
+            <rect x="1260" y="0" width="180" height="900" fill="#59614d"/>
+            <rect x="1284" y="68" width="132" height="630" rx="8" fill="#89927b" stroke="#4e5849" stroke-width="8"/>
+            <rect x="1302" y="90" width="96" height="290" rx="5" fill="#d5e1da" opacity=".8"/>
+            <rect x="1302" y="405" width="96" height="250" rx="5" fill="#6b7565"/>
+            <rect x="1302" y="416" width="9" height="44" rx="4" fill="#28323c"/>
+            <circle cx="1318" cy="439" r="8" fill="#d5c6aa"/>
+          </g>
+
+          <!-- bunting -->
+          <path d="M80 115 Q 360 260 635 125" fill="none" stroke="#855e4e" stroke-width="8"/>
+          <g class="bunting">
+            <path d="M125 145 l32 70 32-52z" fill="#19344c"/><path d="M196 172 l34 64 34-48z" fill="#82936f"/>
+            <path d="M275 191 l40 62 35-49z" fill="#e8784b"/><path d="M362 202 l45 55 35-39z" fill="#f0e5d8"/>
+            <path d="M455 205 l45 58 35-46z" fill="#1b3954"/><path d="M545 184 l46 61 34-51z" fill="#9ba684"/>
+          </g>
+          <path d="M805 132 Q 1060 245 1325 125" fill="none" stroke="#855e4e" stroke-width="8"/>
+          <g class="bunting">
+            <path d="M855 158 l32 70 32-52z" fill="#19344c"/><path d="M930 180 l34 64 34-48z" fill="#82936f"/>
+            <path d="M1012 190 l40 62 35-49z" fill="#e8784b"/><path d="M1100 197 l45 55 35-39z" fill="#f0e5d8"/>
+            <path d="M1190 194 l45 58 35-46z" fill="#1b3954"/><path d="M1270 164 l42 60 35-51z" fill="#9ba684"/>
+          </g>
+
+          <!-- ceiling lights -->
+          <g fill="#26333d"><path d="M430 0v68" stroke="#26333d" stroke-width="5"/><path d="M405 68 Q430 35 455 68z"/></g>
+          <g fill="#26333d"><path d="M1010 0v68" stroke="#26333d" stroke-width="5"/><path d="M985 68 Q1010 35 1035 68z"/></g>
+
+          <!-- left shelving -->
+          <g filter="url(#shadow)" id="shelf">
+            <rect x="205" y="165" width="250" height="425" rx="10" fill="url(#wood)" stroke="#774621" stroke-width="6"/>
+            <rect x="226" y="196" width="208" height="104" rx="6" fill="#b87843"/><rect x="226" y="315" width="208" height="104" rx="6" fill="#b87843"/><rect x="226" y="434" width="208" height="104" rx="6" fill="#b87843"/>
+            <g fill="#e7dcc5"><rect x="258" y="217" width="38" height="70" rx="3"/><rect x="305" y="230" width="22" height="58"/><rect x="337" y="212" width="30" height="74"/><rect x="375" y="240" width="25" height="46"/></g>
+            <g fill="#5d7d6e"><rect x="258" y="337" width="22" height="63"/><rect x="287" y="325" width="31" height="75"/><rect x="328" y="342" width="24" height="58"/></g>
+            <g fill="#b98c58"><rect x="259" y="451" width="50" height="62"/><rect x="320" y="449" width="40" height="64"/><rect x="370" y="456" width="42" height="57"/></g>
+            <circle cx="330" cy="177" r="35" fill="#73906d"/><rect x="313" y="203" width="34" height="35" rx="8" fill="#d8c9b2"/>
+          </g>
+
+          <!-- right memory board -->
+          <g filter="url(#shadow)">
+            <rect x="1025" y="170" width="215" height="360" rx="12" fill="#bb8656" stroke="#744c2f" stroke-width="6"/>
+            <text x="1132" y="213" text-anchor="middle" font-family="Caveat" font-size="38" fill="#3f2f25">Memory Gallery</text>
+            <g class="board-papers">
+              <g transform="rotate(-4 1083 315)"><rect x="1048" y="266" width="72" height="94" rx="3" fill="#fbf2dd"/><rect x="1052" y="273" width="64" height="55" fill="#a8c0c3"/><text x="1084" y="346" font-family="Caveat" font-size="14" text-anchor="middle" fill="#57483b">Best Memories</text></g>
+              <g transform="rotate(4 1178 315)"><rect x="1144" y="266" width="72" height="94" rx="3" fill="#fbf2dd"/><rect x="1148" y="273" width="64" height="55" fill="#cba78d"/><text x="1180" y="346" font-family="Caveat" font-size="14" text-anchor="middle" fill="#57483b">Precious Moments</text></g>
+              <g transform="rotate(-2 1129 423)"><rect x="1096" y="375" width="72" height="94" rx="3" fill="#fbf2dd"/><rect x="1100" y="382" width="64" height="55" fill="#9ba6c2"/><text x="1132" y="455" font-family="Caveat" font-size="14" text-anchor="middle" fill="#57483b">Thank You</text></g>
+            </g>
+          </g>
+
+          <!-- chalkboard -->
+          <g filter="url(#shadow)" id="chalkboard">
+            <rect x="495" y="160" width="540" height="330" rx="8" fill="#1d2a23" stroke="#7b5e44" stroke-width="16"/>
+            <rect x="518" y="182" width="494" height="286" rx="4" fill="#23372b" stroke="#d1b38c" stroke-width="2" opacity=".65"/>
+            <text id="chalkSmall" x="765" y="230" text-anchor="middle" font-family="DM Sans" font-size="28" letter-spacing="5" fill="#f8e7c6">TODAY'S LESSON</text>
+            <text id="chalkTitle" x="765" y="305" text-anchor="middle" font-family="Caveat" font-weight="700" font-size="70" fill="#fff0c8">Happy Teacher's Day!</text>
+            <text id="chalkTeacher" x="765" y="365" text-anchor="middle" font-family="Caveat" font-weight="700" font-size="60" fill="#f7d985">Teacher</text>
+            <text id="chalkSub" x="765" y="425" text-anchor="middle" font-family="Caveat" font-size="36" fill="#ffffff">Celebrating your kindness &amp; guidance ❤️</text>
+            <text x="765" y="460" text-anchor="middle" font-size="34" fill="#ffd414">★★★★★</text>
+          </g>
+
+          <!-- desk -->
+          <g filter="url(#shadow)" id="teacher-desk">
+            <ellipse cx="765" cy="745" rx="295" ry="105" fill="#22364a" opacity=".75"/>
+            <rect x="520" y="490" width="490" height="300" rx="20" fill="url(#desk)" stroke="#734522" stroke-width="7"/>
+            <rect x="550" y="528" width="430" height="226" rx="16" fill="#bd7a3e" opacity=".95"/>
+            <rect x="520" y="478" width="490" height="60" rx="16" fill="#e4ae6d" stroke="#754824" stroke-width="7"/>
+            <g id="report-object" class="object-art"><rect x="620" y="450" width="75" height="98" rx="6" fill="#e9dfb7" stroke="#667649" stroke-width="8"/><text x="658" y="478" text-anchor="middle" font-family="Caveat" font-size="16" fill="#586044">TEACHER'S</text><text x="658" y="497" text-anchor="middle" font-family="Caveat" font-size="16" fill="#586044">REPORT CARD</text><circle cx="658" cy="522" r="15" fill="#7d9a60"/><text x="658" y="528" text-anchor="middle" font-size="18" fill="#fff">A+++</text></g>
+            <g id="letter-object" class="object-art"><rect x="730" y="460" width="96" height="68" rx="8" fill="#ffd5c8" stroke="#b4735e" stroke-width="4"/><path d="M735 468 l43 34 43-34" fill="none" stroke="#b4735e" stroke-width="3"/><text x="778" y="492" text-anchor="middle" font-family="Caveat" font-size="16" fill="#6b5144">A Special Note</text><circle cx="778" cy="512" r="6" fill="#66806b"/></g>
+            <g id="mug-object" class="object-art"><path d="M850 464 h60 v49 q-30 25-60 0z" fill="#1e3449"/><path d="M910 477 q31 0 0 36" fill="none" stroke="#1e3449" stroke-width="9"/><text x="880" y="501" text-anchor="middle" font-size="22" fill="#fff">♥</text></g>
+            <g id="desk-plant"><rect x="925" y="492" width="40" height="25" rx="6" fill="#e6d5ba"/><circle cx="946" cy="478" r="27" fill="#6e8960"/><circle cx="925" cy="468" r="18" fill="#7b966b"/><circle cx="962" cy="462" r="19" fill="#65865c"/></g>
+          </g>
+
+          <!-- floor plants -->
+          <g id="plant-left"><rect x="210" y="690" width="95" height="108" rx="35" fill="#f1e2d0" stroke="#d0bda4" stroke-width="4"/><rect x="230" y="772" width="55" height="30" rx="15" fill="#2f4b44"/><g fill="#6f8c63"><ellipse cx="260" cy="670" rx="26" ry="60" transform="rotate(-25 260 670)"/><ellipse cx="234" cy="650" rx="24" ry="64" transform="rotate(-50 234 650)"/><ellipse cx="284" cy="643" rx="24" ry="68" transform="rotate(30 284 643)"/></g></g>
+          <g id="plant-right"><rect x="1120" y="690" width="95" height="108" rx="35" fill="#f1e2d0" stroke="#d0bda4" stroke-width="4"/><rect x="1140" y="772" width="55" height="30" rx="15" fill="#2f4b44"/><g fill="#708d67"><ellipse cx="1165" cy="666" rx="27" ry="67" transform="rotate(-30 1165 666)"/><ellipse cx="1139" cy="647" rx="25" ry="62" transform="rotate(-50 1139 647)"/><ellipse cx="1189" cy="648" rx="24" ry="63" transform="rotate(30 1189 648)"/></g></g>
+
+          <!-- student desks -->
+          <g class="student-desk" filter="url(#shadow)"><rect x="310" y="640" width="210" height="115" rx="18" fill="#d7a063" stroke="#79491f" stroke-width="6"/><rect x="332" y="760" width="18" height="100" fill="#5a412f"/><rect x="480" y="760" width="18" height="100" fill="#5a412f"/><rect x="360" y="665" width="105" height="60" rx="7" fill="#2e4152"/><path d="M370 804 q85-40 165 0" fill="none" stroke="#304555" stroke-width="22"/></g>
+          <g class="student-desk" filter="url(#shadow)"><rect x="1010" y="640" width="210" height="115" rx="18" fill="#d7a063" stroke="#79491f" stroke-width="6"/><rect x="1032" y="760" width="18" height="100" fill="#5a412f"/><rect x="1180" y="760" width="18" height="100" fill="#5a412f"/><rect x="1058" y="665" width="105" height="60" rx="7" fill="#f2ded5"/><path d="M1065 804 q80-40 155 0" fill="none" stroke="#304555" stroke-width="22"/></g>
+
+          <!-- interactive hotspot anchors (invisible artwork layer) -->
+          <g id="hotspot-anchors" aria-hidden="true">
+            <rect id="anchor-report" x="605" y="435" width="105" height="130" fill="transparent"/>
+            <rect id="anchor-letter" x="720" y="445" width="115" height="95" fill="transparent"/>
+            <rect id="anchor-diary" x="250" y="180" width="175" height="180" fill="transparent"/>
+            <rect id="anchor-memory-left" x="1038" y="255" width="100" height="120" fill="transparent"/>
+            <rect id="anchor-memory-right" x="1135" y="255" width="100" height="120" fill="transparent"/>
+            <rect id="anchor-memory-bottom" x="1088" y="365" width="100" height="120" fill="transparent"/>
+          </g>
+        </svg>
+
+        <div class="hotspots" id="hotspots">
+          <button class="hotspot" data-object="diary" style="--x:20.5%;--y:39%"><span>✦</span> Memory</button>
+          <button class="hotspot" data-object="report" style="--x:43%;--y:57%"><span>✦</span> Report Card</button>
+          <button class="hotspot" data-object="memory-left" style="--x:72%;--y:33%"><span>✦</span> Memory</button>
+          <button class="hotspot" data-object="memory-right" style="--x:79.5%;--y:33%"><span>✦</span> Memory</button>
+          <button class="hotspot" data-object="letter" style="--x:62.5%;--y:54%"><span>✦</span> Letter</button>
+          <button class="hotspot" data-object="memory-bottom" style="--x:77%;--y:46%"><span>✦</span> Diary</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <section class="entrance-panel" id="entrancePanel">
+      <div class="entrance-sign"><span class="heart">♥</span><span>Welcome, <b id="entranceName">Teacher</b>!</span><span class="heart">♥</span><small>Today, the classroom is all about YOU. ✨</small></div>
+      <div class="doorway" id="doorway"><div class="door-panel left"></div><div class="door-panel right"></div><div class="door-glow"></div><div class="door-inside"><div class="mini-board">Happy Teacher's Day!<br><small id="doorName">Teacher</small></div></div></div>
+      <div class="entrance-copy">Happy<br><b>Teacher's Day</b></div>
+      <button class="enter-button" id="enterButton"><span>🚪</span> Enter the Classroom ✨</button>
+    </section>
+
+    <div class="top-sound"><button id="soundToggle" class="sound-button" aria-label="Toggle music"><span id="soundIcon">🔊</span></button></div>
+
+    <section class="guided-card" id="guidedCard" aria-live="polite">
+      <div class="guide-pin">📍</div>
+      <div class="guide-text"><b id="guideTitle">Look around the class!</b><span id="guideSubtitle">Find something made specially for you.</span></div>
+      <button class="guide-action" id="guideAction">Zoom <span>➜</span></button>
+    </section>
+
+    <section class="progress-dots" id="progressDots" aria-hidden="true"><span></span><span></span></section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-modal" id="closeModal" aria-label="Close">×</button>
+        <div class="modal-inner" id="modalInner"></div>
+      </div>
+    </div>
+
+    <section class="finale" id="finale" aria-hidden="true">
+      <div class="confetti" id="confetti"></div>
+      <div class="finale-sign"><span id="finalTitle">Thank You, Teacher!</span><span class="final-heart">♥</span><small>For inspiring, guiding, and believing in us. ✨</small></div>
+      <button id="replayButton" class="replay-button">↪ Replay Classroom Experience</button>
+    </section>
+  </main>
 </div>
 <script src="assets/js/app.js"></script>
 </body>
