@@ -12,32 +12,9 @@
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <div class="story-progress" aria-hidden="true"><span id="progressBar"></span></div>
-
-  <main id="app">
-    <!-- Screen 1: DM / Intro -->
-    <section class="screen intro-screen is-active" data-screen="intro" aria-label="Intro">
-      <div class="intro-glow"></div>
-      <div class="phone-shell">
-        <div class="phone-status"><span>9:41</span><span>● ● ▮</span></div>
-        <div class="dm-head"><span class="back">‹</span><strong>Messages</strong><span>•••</span></div>
-        <div class="dm-thread">
-          <div class="system-note">POV: You didn't give your teacher a greeting card... 🥲💝</div>
-          <div class="bubble left">I made something special for you today. 💗</div>
-          <div class="bubble right">What is it?? 👀</div>
-          <div class="bubble left">Just open this link... I promise it is worth it. ✨</div>
-          <div class="link-card" id="openExperienceCard">
-            <div class="link-icon">↗</div>
-            <div><small>teacher-day</small><b>A whole classroom, just for you</b></div>
-          </div>
-          <div class="typing">typing…</div>
-        </div>
-      </div>
-      <button class="primary-btn floating-cta" data-next="classroom">Open the surprise <span>→</span></button>
-    </section>
-
-    <!-- Screen 2: Classroom -->
-    <section class="screen classroom-screen" data-screen="classroom" aria-label="Classroom">
+<main id="app">
+    <!-- Main Classroom -->
+    <section class="screen classroom-screen is-active" data-screen="classroom" aria-label="Classroom">
       <div class="cinematic-copy top-copy">
         <div class="eyebrow">A whole classroom instead. ❤️</div>
         <h1>Made specially<br>for your teacher.</h1>
