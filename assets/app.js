@@ -1,15 +1,17 @@
-const config = {
-  teacherName: "Teacher",
-  studentSignature: "Your Students"
-};
+const teacherKey = new URLSearchParams(window.location.search).get('teacher')?.toLowerCase();
+const teacher = TEACHERS[teacherKey] || DEFAULT_TEACHER;
 
 const screens = [...document.querySelectorAll('.screen')];
 const progressBar = document.getElementById('progressBar');
 const toast = document.getElementById('toast');
 let current = 0;
 
-function applyConfig(){
-  document.querySelectorAll('.teacher-name').forEach(el => el.textContent = config.teacherName);
+function applyTeacher(){
+  document.title = `Happy Teacher's Day, ${teacher.name} ❤️`;
+  document.querySelectorAll('.teacher-name').forEach(el => el.textContent = teacher.name);
+  document.querySelectorAll('[data-teacher-name]').forEach(el => el.textContent = teacher.name);
+  const invalid = teacherKey && !TEACHERS[teacherKey];
+  if(invalid) showToast('Teacher link not found — showing the default greeting.');
 }
 
 function goTo(name){
@@ -36,16 +38,14 @@ document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{
 
 const music = document.getElementById('bgMusic');
 const sound = document.getElementById('soundToggle');
-let musicOn = false;
 sound.addEventListener('click', async()=>{
-  // Add assets/music.mp3 and a source in index.html to enable this.
   if(!music.querySelector('source')){
     showToast('Add your music file at assets/music.mp3');
     return;
   }
   try{
-    if(music.paused){ await music.play(); musicOn=true; sound.textContent='♫'; }
-    else { music.pause(); musicOn=false; sound.textContent='♪'; }
+    if(music.paused){ await music.play(); sound.textContent='♫'; sound.classList.add('playing'); }
+    else { music.pause(); sound.textContent='♪'; sound.classList.remove('playing'); }
   }catch{ showToast('Tap again to start the music.'); }
 });
 
@@ -53,13 +53,12 @@ function showToast(message){
   toast.textContent = message;
   toast.classList.add('show');
   clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(()=>toast.classList.remove('show'),2200);
+  window.__toastTimer = setTimeout(()=>toast.classList.remove('show'),2600);
 }
 
-applyConfig();
+applyTeacher();
 progressBar.style.width='20%';
 
-// Optional keyboard navigation for desktop testing.
 document.addEventListener('keydown', e=>{
   if(e.key==='ArrowRight') goTo('classroom');
   if(e.key==='Escape') document.querySelectorAll('dialog[open]').forEach(d=>d.close());
