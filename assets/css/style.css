@@ -9,10 +9,12 @@
   --shadow: rgba(14, 22, 18, .30);
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #111814; font-family: "DM Sans", system-ui, sans-serif; color: var(--ink); }
+html, body { margin: 0; width: 100%; min-height: 100%; overflow: hidden; background: #111814; font-family: "DM Sans", system-ui, sans-serif; color: var(--ink); }
+html { background:#111814; }
+body { min-height: 100svh; }
 button { font: inherit; }
 button:focus-visible { outline: 3px solid rgba(255, 213, 162, .95); outline-offset: 4px; }
-.app { width: 100vw; height: 100dvh; position: relative; overflow: hidden; background: #111814; }
+.app { width: 100vw; height: 100svh; min-height: 100dvh; position: relative; overflow: hidden; background: #111814; }
 .scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transform: scale(1.035); transition: opacity 900ms cubic-bezier(.22,.61,.36,1), transform 1200ms cubic-bezier(.16,1,.3,1); }
 .scene.is-active { opacity: 1; pointer-events: auto; transform: scale(1); }
 .scene-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
@@ -67,10 +69,10 @@ button:focus-visible { outline: 3px solid rgba(255, 213, 162, .95); outline-offs
 .hotspot-memory-2 { right:14%; top:43%; width:10%; height:15%; }
 .hotspot-memory-3 { left:45%; top:61%; width:10%; height:12%; }
 .hotspot-guide { animation: hotspotPulse 2.8s ease-in-out infinite; }
-.top-controls { position:fixed; top:14px; right:14px; z-index:30; }
+.top-controls { position:fixed; top:max(14px, env(safe-area-inset-top)); right:max(14px, env(safe-area-inset-right)); z-index:30; }
 .icon-btn { width:42px; height:42px; border:0; border-radius:50%; background:rgba(255,250,243,.86); box-shadow:0 8px 24px rgba(0,0,0,.21); cursor:pointer; transition:transform .2s ease, background .2s ease; }
 .icon-btn:hover { transform:translateY(-1px) scale(1.04); }
-.progress-dots { position:fixed; left:50%; bottom:14px; transform:translateX(-50%); z-index:20; display:flex; gap:6px; padding:6px 9px; border-radius:999px; background:rgba(15,22,19,.24); backdrop-filter:blur(8px); }
+.progress-dots { position:fixed; left:50%; bottom:max(14px, env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:20; display:flex; gap:6px; padding:6px 9px; border-radius:999px; background:rgba(15,22,19,.24); backdrop-filter:blur(8px); }
 .progress-dots .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.46); transition:transform .3s ease, background .3s ease; }
 .progress-dots .dot.is-active { background:#fff; transform:scale(1.18); }
 .modal-layer { position:fixed; inset:0; z-index:50; display:none; }
@@ -112,7 +114,7 @@ button:focus-visible { outline: 3px solid rgba(255, 213, 162, .95); outline-offs
 @keyframes shimmer { 0%{transform:translateX(-130%);opacity:0}15%{opacity:.8}100%{transform:translateX(130%);opacity:0} }
 @keyframes bulletIn { to { transform:translateY(0); opacity:1; } }
 @media (max-width: 900px) and (orientation: portrait) {
-  .orientation-lock { position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:#19231f; color:#fff; padding:30px; text-align:center; }
+  .orientation-lock { position:fixed; inset:0; z-index:100; display:grid; place-items:center; width:100vw; height:100svh; min-height:100dvh; background:#19231f; color:#fff; padding:30px; text-align:center; }
   .orientation-card { max-width:340px; }
   .phone-icon { font-size:48px; margin-bottom:14px; animation:rotatePhone 1.7s ease-in-out infinite; }
   .orientation-card h2 { margin:0 0 8px; }
@@ -129,8 +131,23 @@ button:focus-visible { outline: 3px solid rgba(255, 213, 162, .95); outline-offs
   .hotspot::after { display:none; }
   .hotspot-label { display:none; }
   .look-around { bottom:3.2%; }
-  .progress-dots { bottom:7px; }
+  .progress-dots { bottom:max(7px, env(safe-area-inset-bottom)); }
 }
+/* V3 edge-to-edge / landscape polish */
+html:fullscreen, html:-webkit-full-screen, body:fullscreen, body:-webkit-full-screen {
+  width:100%; height:100%; background:#111814;
+}
+:fullscreen .app, :-webkit-full-screen .app {
+  width:100vw; height:100vh; min-height:100vh;
+}
+@media (orientation: landscape) and (max-width: 900px) {
+  .scene-art { object-position:center center; }
+  .welcome-screen { padding:clamp(18px, 4vw, 42px); }
+  .welcome-content { max-width:min(86vw, 920px); }
+  .classroom-stage { width:100vw; height:100%; }
+  .look-around { bottom:max(3.2%, env(safe-area-inset-bottom)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
 }
