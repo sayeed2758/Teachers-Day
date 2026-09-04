@@ -1,23 +1,33 @@
-# Teacher's Day Interactive — multi-teacher base
+# Teacher's Day Interactive — V2
 
-A single static site that resolves a teacher from `?teacher=` and keeps the same interactive classroom experience.
+Single static Netlify-ready project with a personalized URL architecture.
 
 Examples:
-- `/?teacher=shahid`
-- `/?teacher=sakti`
-- `/?teacher=sameer`
+- `?teacher=shahid`
+- `?teacher=sakti`
+- `?teacher=sameer`
+- `?teacher=naila`
+- `?teacher=mitanjali`
+- `?teacher=sanjeeda`
+- `?teacher=rupali`
+- `?teacher=saraswati`
+- `?teacher=sumitra`
+- `?teacher=fatima`
 
-## Current interaction pass
-- Orientation gate on portrait phones
-- Intro surprise screen
-- Corridor → classroom cinematic transition
-- Classroom zoom/reset
-- Interactive hotspots for report card, envelope, diary, and memory cards
-- Modal open/close animation with image reveal
-- Sound toggle and small synthesized chime (no audio file required)
-- Keyboard Escape close
-- Gentle desktop pointer parallax
-- Shared single-codebase teacher data architecture
+## V2 interaction pass
+- Reference-style rotate-screen gate
+- Cinematic welcome fade/scale entrance + exit
+- Corridor → classroom scene transition
+- Classroom camera parallax on desktop
+- Zoom / Reset camera transition
+- Interactive hotspot hover/focus glow
+- Focus ring around the selected object
+- Clickable report card, envelope, diary and 3 memories
+- Modal backdrop blur + spring/3D entrance
+- Art reveal + shimmer + staggered content animation
+- Sound toggle with master gain (actually mutes/unmutes effects)
+- Copy personalized teacher link from the detail modal
+- Mobile-safe layout and reduced-motion support
 
-## Important
-The current build references the public artwork URLs from the supplied reference site so the interaction prototype can be tested immediately. Before production, swap those URLs for licensed/local artwork and add the final teacher-specific content/photos.
+## Assets
+The current build intentionally references the public reference artwork for prototype fidelity. Before production, replace those URLs with locally hosted/licensed assets in `assets/`.
