@@ -151,3 +151,86 @@ html:fullscreen, html:-webkit-full-screen, body:fullscreen, body:-webkit-full-sc
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
 }
+
+
+/* V4 — reference-style interactive object choreography */
+.hotspot {
+  overflow:visible;
+  isolation:isolate;
+  transform:translateZ(0);
+  transition:transform .28s cubic-bezier(.16,1,.3,1), filter .28s ease;
+}
+.hotspot::before {
+  inset:-8%;
+  background:radial-gradient(circle, rgba(255,231,190,.22) 0 12%, rgba(255,210,153,.09) 28%, transparent 67%);
+  filter:blur(1px);
+}
+.hotspot::after {
+  inset:-13px;
+  border-color:rgba(255,221,177,0);
+  box-shadow:0 0 0 0 rgba(255,219,171,0), 0 0 0 rgba(255,219,171,0);
+}
+.hotspot::marker { display:none; }
+.hotspot:hover, .hotspot:focus-visible { transform:translateY(-4px) scale(1.025); filter:brightness(1.05); }
+.hotspot.is-active { transform:scale(1.035); }
+.hotspot.is-opening { animation:objectSelect .46s cubic-bezier(.16,1,.3,1) both; z-index:12; }
+.hotspot.is-opening::before { opacity:1; animation:selectionGlow .46s ease both; }
+.hotspot.is-opening::after { opacity:1; animation:selectionRing .46s ease both; }
+.hotspot-label::before { content:"✦ "; }
+.hotspot-label { box-shadow:0 8px 22px rgba(12,17,14,.25); }
+.hotspot:hover .hotspot-label, .hotspot:focus-visible .hotspot-label, .hotspot.is-opening .hotspot-label { opacity:1; }
+
+/* Always give touch users a gentle discoverability pulse; it disappears once opened. */
+.hotspot-report::after, .hotspot-envelope::after, .hotspot-diary::after,
+.hotspot-memory-1::after, .hotspot-memory-2::after, .hotspot-memory-3::after {
+  animation:discoverRing 3.2s ease-in-out infinite;
+}
+.hotspot-envelope::after { animation-delay:.55s; }
+.hotspot-diary::after { animation-delay:1.1s; }
+.hotspot-memory-1::after { animation-delay:1.65s; }
+.hotspot-memory-2::after { animation-delay:2.2s; }
+.hotspot-memory-3::after { animation-delay:2.75s; }
+.hotspot.is-opening::after, .hotspot.is-active::after { animation:none; }
+
+/* Make the classroom feel like a camera is settling into place after entry. */
+.scene-classroom.is-active .classroom-art { animation:classroomReveal 1.05s cubic-bezier(.16,1,.3,1) both; }
+.scene-classroom.is-active .hotspot { animation:hotspotFloat 4.8s ease-in-out infinite; }
+.scene-classroom.is-active .hotspot-envelope { animation-delay:.25s; }
+.scene-classroom.is-active .hotspot-diary { animation-delay:.55s; }
+.scene-classroom.is-active .hotspot-memory-1 { animation-delay:.8s; }
+.scene-classroom.is-active .hotspot-memory-2 { animation-delay:1.1s; }
+.scene-classroom.is-active .hotspot-memory-3 { animation-delay:1.4s; }
+.hotspot.is-opening, .hotspot.is-active { animation:none !important; }
+
+/* Letter/report/diary opening: the modal art arrives like a physical keepsake. */
+.detail-modal { perspective:1200px; }
+.modal-layer.is-open .detail-art { animation:keepsakeReveal .72s cubic-bezier(.16,1,.3,1) both; }
+.modal-layer.is-open .detail-copy { animation:copyReveal .55s .12s cubic-bezier(.16,1,.3,1) both; }
+.modal-layer.is-open .modal-close { animation:closePop .42s .22s cubic-bezier(.16,1,.3,1) both; }
+.detail-art-wrap::after { content:""; position:absolute; inset:8%; border-radius:50%; background:radial-gradient(circle, rgba(255,245,220,.34), transparent 65%); opacity:0; pointer-events:none; }
+.modal-layer.is-open .detail-art-wrap::after { animation:artAura .8s ease both; }
+
+@keyframes objectSelect {
+  0% { transform:scale(1); filter:brightness(1); }
+  32% { transform:scale(1.10) translateY(-5px); filter:brightness(1.22) drop-shadow(0 12px 24px rgba(255,211,157,.28)); }
+  100% { transform:scale(1.035); filter:brightness(1.05); }
+}
+@keyframes selectionGlow { 0%{opacity:0;transform:scale(.72)}35%{opacity:1}100%{opacity:.75;transform:scale(1.12)} }
+@keyframes selectionRing { 0%{opacity:0;transform:scale(.70)}35%{opacity:1;border-color:rgba(255,224,183,.9);box-shadow:0 0 0 8px rgba(255,219,171,.11),0 0 45px rgba(255,219,171,.28)}100%{opacity:.55;transform:scale(1.02);border-color:rgba(255,224,183,.45)} }
+@keyframes discoverRing { 0%,100%{opacity:.10;transform:scale(.98)} 50%{opacity:.72;transform:scale(1.035);box-shadow:0 0 0 7px rgba(255,219,171,.055),0 0 22px rgba(255,219,171,.12)} }
+@keyframes hotspotFloat { 0%,100%{margin-top:0} 50%{margin-top:-2px} }
+@keyframes classroomReveal { from{opacity:.78;transform:scale(1.018)} to{opacity:1;transform:scale(1)} }
+@keyframes keepsakeReveal { 0%{opacity:0;transform:translateY(25px) scale(.82) rotateY(-10deg) rotateZ(-1deg)} 62%{opacity:1;transform:translateY(-3px) scale(1.02) rotateY(2deg) rotateZ(.2deg)} 100%{opacity:1;transform:translateY(0) scale(1) rotateY(0) rotateZ(0)} }
+@keyframes copyReveal { from{opacity:0;transform:translateX(22px)} to{opacity:1;transform:translateX(0)} }
+@keyframes closePop { from{opacity:0;transform:scale(.72) rotate(-25deg)} to{opacity:1;transform:scale(1) rotate(0)} }
+@keyframes artAura { 0%{opacity:0;transform:scale(.6)} 40%{opacity:.8} 100%{opacity:0;transform:scale(1.15)} }
+
+@media (hover:none) {
+  .hotspot-label { opacity:.88; transform:translateX(-50%) translateY(0); top:-25px; }
+  .hotspot-report .hotspot-label, .hotspot-envelope .hotspot-label, .hotspot-diary .hotspot-label { display:block; }
+}
+@media (max-width:760px) and (orientation:landscape) {
+  .hotspot-label { font-size:9px; padding:4px 7px; top:-24px; }
+  .detail-modal { width:min(94vw,900px); grid-template-columns:minmax(250px,46%) 1fr; max-height:88vh; }
+  .detail-art-wrap { min-height:260px; }
+}
