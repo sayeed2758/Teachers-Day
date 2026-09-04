@@ -2,7 +2,6 @@ const teacherKey = new URLSearchParams(window.location.search).get('teacher')?.t
 const teacher = TEACHERS[teacherKey] || DEFAULT_TEACHER;
 
 const screens = [...document.querySelectorAll('.screen')];
-const progressBar = document.getElementById('progressBar');
 const toast = document.getElementById('toast');
 let current = 0;
 
@@ -19,12 +18,10 @@ function goTo(name){
   if(next < 0) return;
   screens.forEach((screen,i)=>screen.classList.toggle('is-active', i===next));
   current = next;
-  progressBar.style.width = `${Math.max(20,(next/(screens.length-1))*100)}%`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 document.querySelectorAll('[data-next]').forEach(btn=>btn.addEventListener('click',()=>goTo(btn.dataset.next)));
-document.getElementById('openExperienceCard').addEventListener('click',()=>goTo('classroom'));
 
 document.querySelectorAll('[data-open]').forEach(btn=>btn.addEventListener('click',()=>{
   const dialog = document.getElementById(btn.dataset.open + 'Modal');
@@ -57,7 +54,6 @@ function showToast(message){
 }
 
 applyTeacher();
-progressBar.style.width='20%';
 
 document.addEventListener('keydown', e=>{
   if(e.key==='ArrowRight') goTo('classroom');
