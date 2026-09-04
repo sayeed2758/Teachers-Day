@@ -1,34 +1,36 @@
-# Teacher's Day Interactive Gift — GitHub Ready Starter
+# Teacher's Day Gift — Multi-Teacher Edition
 
-This is the first implementation phase based on the uploaded reference video.
+One GitHub Pages website can serve all 10 teachers using personalized query links.
 
-## Edit teacher name
-Open `assets/app.js` and change:
+## Teacher links
 
-```js
-const config = {
-  teacherName: "Teacher",
-  studentSignature: "Your Students"
-};
-```
+Replace `YOUR-USERNAME.github.io/teachers-day-gift` with your actual GitHub Pages address:
 
-## Add music
-1. Put a royalty-free MP3 at `assets/music.mp3`.
-2. Open `index.html`.
-3. Uncomment the `<source>` line inside `#bgMusic`.
+- `?teacher=shahid` — Shahid Sir
+- `?teacher=sakti` — Sakti Sir
+- `?teacher=sameer` — Sameer Sir
+- `?teacher=naila` — Naila Ma'am
+- `?teacher=mitanjali` — Mitanjali Ma'am
+- `?teacher=sanjeeda` — Sanjeeda Ma'am
+- `?teacher=rupali` — Rupali Ma'am
+- `?teacher=saraswati` — Saraswati Ma'am
+- `?teacher=sumitra` — Sumitra Ma'am
+- `?teacher=fatima` — Fatima Ma'am
 
-## Add photos
-Replace the four gallery placeholders in `assets/style.css` / `index.html` with your own images. The current gallery is intentionally local and does not depend on external image hosting.
+Example:
+`https://YOUR-USERNAME.github.io/teachers-day-gift/?teacher=shahid`
 
-## GitHub Pages
-Upload this folder to a GitHub repository, then enable **Settings → Pages → Deploy from branch → main → /root**.
+## How it works
 
-## Current implementation
-- Mobile-first 9:16-inspired intro screen
-- Interactive classroom scene
-- Teacher report card modal
-- Words / appreciation modal
-- Memories gallery placeholders
-- Heartfelt letter modal
-- Responsive desktop/mobile layout
-- Local-only HTML/CSS/JS; no framework needed
+- `assets/teachers.js` contains the 10 teacher profiles.
+- `assets/app.js` reads the `teacher` URL parameter and replaces every teacher-name field.
+- The classroom, animations, letter, report card, and school memories remain common.
+- If a link has an unknown teacher key, the site safely falls back to Shahid Sir and shows a small warning.
+
+## School memories
+
+The memories section is intentionally common for all 10 teachers. Replace the four photo placeholders in `index.html`/CSS with your school memory images later.
+
+## Music
+
+Put the chosen MP3 at `assets/music.mp3`, then uncomment the `<source>` line in `index.html`.

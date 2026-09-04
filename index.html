@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0b12" />
-  <meta name="description" content="A heartfelt interactive Teacher's Day classroom experience." />
+  <meta name="description" content="A heartfelt interactive Teacher's Day classroom experience, personalized for each teacher." />
   <title>A Whole Classroom, Just for You ❤️</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
         <div class="dm-head"><span class="back">‹</span><strong>Messages</strong><span>•••</span></div>
         <div class="dm-thread">
           <div class="system-note">POV: You didn't give your teacher a greeting card... 🥲💝</div>
-          <div class="bubble left">Ma'am, I made something special for you today. 💗</div>
+          <div class="bubble left">I made something special for you today. 💗</div>
           <div class="bubble right">What is it?? 👀</div>
           <div class="bubble left">Just open this link... I promise it is worth it. ✨</div>
           <div class="link-card" id="openExperienceCard">
@@ -79,7 +79,7 @@
       <button class="close-modal" data-close aria-label="Close">×</button>
       <div class="paper-card report-card">
         <div class="paper-ribbon">TEACHER'S REPORT CARD</div>
-        <h2><span class="Shahid Sir">Teacher</span></h2>
+        <h2><span class="teacher-name">Teacher</span></h2>
         <p class="muted">A report card no test could measure.</p>
         <div class="grade-row"><span>Patience</span><span>★★★★★</span></div>
         <div class="grade-row"><span>Kindness</span><span>★★★★★</span></div>
@@ -115,7 +115,7 @@
           <div class="photo photo-3"><span>Big laughs</span></div>
           <div class="photo photo-4"><span>Forever grateful</span></div>
         </div>
-        <p class="muted">Replace these four placeholders with your own class photographs in <code>assets/</code>.</p>
+        <p class="muted">These are common school memories shared across all teacher links. Replace the placeholders with your school photographs in <code>assets/</code>.</p>
       </div>
     </dialog>
 
@@ -145,6 +145,7 @@
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="assets/teachers.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>
