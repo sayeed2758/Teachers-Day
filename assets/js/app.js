@@ -96,6 +96,9 @@ let audioCtx = null;
 let masterGain = null;
 let stageZoomed = false;
 let openedModal = false;
+let musicTimer = null;
+let musicStep = 0;
+let currentHotspot = null;
 
 // V3: use the first tap/click as the user gesture for fullscreen.
 // Browsers intentionally block unsolicited fullscreen requests, so we do this
@@ -130,35 +133,62 @@ function initAudio() {
   if (!C) return;
   audioCtx = new C();
   masterGain = audioCtx.createGain();
-  masterGain.gain.value = soundOn ? 0.8 : 0;
+  masterGain.gain.value = soundOn ? 0.72 : 0;
   masterGain.connect(audioCtx.destination);
 }
 function unlockAudio() {
   initAudio();
   if (audioCtx?.state === "suspended") audioCtx.resume();
 }
-function tone(freq = 660, duration = 0.3, volume = 0.055) {
+function tone(freq = 660, duration = 0.3, volume = 0.055, type = "sine", when = null) {
   if (!soundOn) return;
   unlockAudio();
   if (!audioCtx || !masterGain) return;
   const osc = audioCtx.createOscillator();
   const g = audioCtx.createGain();
-  const t = audioCtx.currentTime;
-  osc.type = "sine";
+  const t = when ?? audioCtx.currentTime;
+  osc.type = type;
   osc.frequency.setValueAtTime(freq, t);
-  osc.frequency.exponentialRampToValueAtTime(freq * 1.28, t + duration);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(55, freq * 1.018), t + duration);
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(volume, t + 0.025);
+  g.gain.exponentialRampToValueAtTime(volume, t + Math.min(.08, duration * .18));
   g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
   osc.connect(g).connect(masterGain);
   osc.start(t);
-  osc.stop(t + duration + 0.02);
+  osc.stop(t + duration + 0.03);
 }
 function successChime() {
-  tone(620, .28, .05);
-  window.setTimeout(() => tone(820, .35, .04), 75);
+  tone(523.25, .34, .035, "sine");
+  window.setTimeout(() => tone(659.25, .40, .028, "sine"), 95);
+  window.setTimeout(() => tone(783.99, .52, .022, "sine"), 185);
 }
 
+// A tiny, original, browser-generated ambient score. It starts only after the
+// user's first tap, so it works within autoplay policies and needs no audio file.
+const MUSIC_NOTES = [
+  [261.63, 329.63, 392.00], [220.00, 277.18, 329.63],
+  [246.94, 293.66, 369.99], [196.00, 246.94, 293.66],
+  [261.63, 329.63, 392.00], [233.08, 293.66, 349.23],
+  [220.00, 277.18, 329.63], [196.00, 246.94, 329.63]
+];
+function musicTick() {
+  if (!soundOn || !audioCtx || !masterGain) return;
+  const chord = MUSIC_NOTES[musicStep % MUSIC_NOTES.length];
+  const now = audioCtx.currentTime;
+  chord.forEach((n, i) => tone(n, 1.65 + i * .12, .0085, i === 0 ? "triangle" : "sine", now));
+  tone(chord[2] * 2, .52, .006, "sine", now + .72);
+  musicStep++;
+}
+function startMusic() {
+  unlockAudio();
+  if (!audioCtx || musicTimer) return;
+  musicTick();
+  musicTimer = window.setInterval(musicTick, 1800);
+}
+function stopMusic() {
+  if (musicTimer) window.clearInterval(musicTimer);
+  musicTimer = null;
+}
 function activateScene(fromEl, toEl, activeDotIndex) {
   fromEl.classList.remove("is-active");
   toEl.classList.add("is-active");
@@ -189,6 +219,7 @@ function setZoomed(value) {
 
 els.enterBtn.addEventListener("click", async () => {
   unlockAudio();
+  startMusic();
   // Request fullscreen while the click is still an active user gesture.
   await enterImmersiveMode();
   successChime();
@@ -207,7 +238,15 @@ document.querySelectorAll(".hotspot").forEach((hotspot) => {
   hotspot.addEventListener("mouseleave", clearFocus);
   hotspot.addEventListener("focus", () => focusOnPoint(hotspot));
   hotspot.addEventListener("blur", clearFocus);
-  hotspot.addEventListener("click", () => openModal(hotspot.dataset.modal, hotspot));
+  hotspot.addEventListener("click", () => {
+    if (openedModal) return;
+    currentHotspot = hotspot;
+    hotspot.classList.remove("is-opening");
+    void hotspot.offsetWidth;
+    hotspot.classList.add("is-opening");
+    focusOnPoint(hotspot);
+    setTimeout(() => openModal(hotspot.dataset.modal, hotspot), 460);
+  });
 });
 
 function createContent(key) {
@@ -228,7 +267,10 @@ function openModal(key, sourceButton) {
   const item = createContent(key);
   if (!item) return;
   openedModal = true;
-  if (sourceButton) sourceButton.classList.add("is-active");
+  if (sourceButton) {
+    sourceButton.classList.add("is-active");
+    sourceButton.classList.remove("is-opening");
+  }
   els.detailArt.classList.remove("is-loaded");
   els.artLoading.style.opacity = "1";
   els.detailArt.onload = () => els.detailArt.classList.add("is-loaded");
@@ -251,7 +293,8 @@ function closeModal() {
   els.modalLayer.classList.remove("is-open");
   els.modalLayer.setAttribute("aria-hidden", "true");
   document.body.dataset.modalOpen = "false";
-  document.querySelectorAll(".hotspot.is-active").forEach((el) => el.classList.remove("is-active"));
+  document.querySelectorAll(".hotspot.is-active, .hotspot.is-opening").forEach((el) => el.classList.remove("is-active", "is-opening"));
+  currentHotspot = null;
   window.setTimeout(clearFocus, 180);
 }
 
@@ -266,7 +309,8 @@ document.addEventListener("keydown", (e) => {
 els.soundBtn.addEventListener("click", () => {
   unlockAudio();
   soundOn = !soundOn;
-  if (masterGain) masterGain.gain.value = soundOn ? 0.8 : 0;
+  if (masterGain) masterGain.gain.value = soundOn ? 0.72 : 0;
+  if (soundOn) startMusic(); else stopMusic();
   els.soundBtn.textContent = soundOn ? "🔊" : "🔇";
   els.soundBtn.setAttribute("aria-pressed", String(soundOn));
   els.soundBtn.setAttribute("aria-label", soundOn ? "Turn sound off" : "Turn sound on");
